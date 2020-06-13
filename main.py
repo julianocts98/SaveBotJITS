@@ -18,19 +18,6 @@ async def on_message(message):
     if message.author == client.user:
         return
 
-    # if message.content.startswith("!hist"):
-    #     msg_enviada = await message.channel.send("E")
-
-
-    # print(message.author)
-    # print(message.content)
-    # print(message.created_at)
-
-    # if message.content.startswith("!info"):
-    #     print(message.author.guild.members)
-    #     with open("membros", "w") as file:
-    #          file.writelines(str(message.author.guild.members))
-
     if message.content.startswith("!!!tururu"):
         voice_client = await message.author.voice.channel.connect()
         def my_after(error):
