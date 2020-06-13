@@ -2,6 +2,7 @@
 import discord
 import aux
 import asyncio
+import logger
 
 client = discord.Client()
 
@@ -18,7 +19,7 @@ async def on_message(message):
     if message.author == client.user:
         return
 
-    if message.content.startswith("!!!tururu"):
+    if message.content.startswith("história da JITS"):
         voice_client = await message.author.voice.channel.connect()
         def my_after(error):
             coro = voice_client.disconnect()
@@ -31,12 +32,16 @@ async def on_message(message):
         source = discord.FFmpegOpusAudio("audios/tururu.mp3")
         voice_client.play(source, after=my_after)
 
+    log = logger.Logger(message)
+    print(log)
+    log.save_file()
+
 @client.event
 async def on_voice_state_update(member, before, after):
     if member.id == 110036152009912320 and before.channel==None: #id do usuario que deletou o chat
         for channel in client.get_all_channels():
             if type(channel) == discord.channel.TextChannel:
-                await channel.send(file=discord.File("imgs/shamegot.jpg"))
+                await channel.send(file=discord.File("imgs/shamegot.jpg"), content="SHAME!")
         voice_client = await after.channel.connect()
         def my_after(error):
             coro = voice_client.disconnect()
@@ -48,4 +53,6 @@ async def on_voice_state_update(member, before, after):
                 pass
         source = discord.FFmpegOpusAudio("audios/shame.mp3")
         voice_client.play(source, after=my_after)
+
+#executa o bot
 client.run(aux.get_token())
